@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f1ea">
+
+    <title>BrothersInvasion — The Wardrobe</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="header-links" aria-label="Main navigation">
+            <a href="#wardrobe">The wardrobe</a>
+            <a href="#story">Our story</a>
+        </nav>
+
+        <a class="wordmark"
+           href="#wardrobe"
+           aria-label="BrothersInvasion home">
+            BROTHERS<span>INVASION</span>
+        </a>
+
+        <button class="cart-button"
+                id="open-cart"
+                type="button"
+                aria-haspopup="dialog">
+            <span>Selection</span>
+            <span id="cart-count">0</span>
+
+            <svg aria-hidden="true"
+                 width="21"
+                 height="23"
+                 viewBox="0 0 24 26"
+                 fill="none">
+                <path d="M4.5 8.5h15l1 14h-17l1-14Z M8.5 9V6a3.5 3.5 0 0 1 7 0v3"
+                      stroke="currentColor"
+                      stroke-width="1.2" />
+            </svg>
+        </button>
+    </header>
+
+    <main>
+        <section class="collection" id="wardrobe">
+            <div class="intro">
+                <div>
+                    <p class="eyebrow">THE WARDROBE — VOL. 01</p>
+                    <h1>Wear your own story.</h1>
+                </div>
+
+                <div class="intro-note">
+                    <p>Двама братя. Една история.</p>
+                    <p>Independent since 2024.</p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="filters"
+                     role="group"
+                     aria-label="Filter products">
+                    <button type="button" data-filter="all" aria-pressed="true">
+                        All <sup>6</sup>
+                    </button>
+
+                    <button type="button"
+                            data-filter="sweatshirt"
+                            aria-pressed="false">
+                        Sweatshirts
+                    </button>
+
+                    <button type="button"
+                            data-filter="hoodie"
+                            aria-pressed="false">
+                        Hoodies
+                    </button>
+
+                    <button type="button"
+                            data-filter="trousers"
+                            aria-pressed="false">
+                        Trousers
+                    </button>
+                </div>
+
+                <p class="micro location">BULGARIA / EST. 2024</p>
+            </div>
+
+            <div class="wardrobe-wrap" id="wardrobe-wrap">
+                <div class="rail-track">
+                    <div class="rail" aria-hidden="true"></div>
+
+                    <div class="wardrobe"
+                         id="product-rail"
+                         aria-label="Choose a garment"></div>
+                </div>
+            </div>
+
+            <div class="collection-caption">
+                <p class="micro" id="product-count">01 — 06</p>
+                <h2>Your next favourite.</h2>
+
+                <p>
+                    Движи мишката, за да разгледаш.
+                    Кликни, за да избереш.
+                </p>
+            </div>
+
+            <div class="section-bottom">
+                <span>⟵ &nbsp; MOVE TO EXPLORE &nbsp; ⟶</span>
+                <span>THE COLLECTION / 06 PIECES</span>
+                <a href="#story">OUR STORY ↓</a>
+            </div>
+        </section>
+
+        <section class="story" id="story">
+            <div class="story-meta">
+                <span>02 / THE BROTHERHOOD</span>
+                <span>BURGAS, BULGARIA</span>
+            </div>
+
+            <div class="story-content">
+                <h2>
+                    Same blood.<br>
+                    <em>Different breed.</em>
+                </h2>
+
+                <div class="story-copy">
+                    <span class="story-mark" aria-label="BrothersInvasion">
+                        BI
+                        <small>BROTHERSINVASION</small>
+                    </span>
+
+                    <p>
+                        Създаваме дрехи за всеки ден — с внимание към детайла
+                        и свобода на изразяване.
+                    </p>
+
+                    <p>
+                        Двама братя, обща идея и собствен стил.<br>
+                        Това е нашата история.
+                    </p>
+
+                    <a class="story-link"
+                       href="https://www.instagram.com/brothersinvasion_/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        FOLLOW ON INSTAGRAM ↗
+                    </a>
+                </div>
+            </div>
+
+            <div class="story-bottom">
+                <span>OVERSIZED FIT. INDEPENDENT MIND.</span>
+                <span>ДВАМА БРАТЯ. ЕДИН СТИЛ.</span>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <a class="footer-logo" href="#wardrobe">
+            BROTHERSINVASION
+        </a>
+
+        <span>CONCEPT PREVIEW</span>
+
+        <a href="#story">OUR STORY ↑</a>
+    </footer>
+
+    <!-- Product details -->
+    <div class="overlay" id="product-overlay" hidden>
+        <div class="scrim" data-close="product"></div>
+
+        <section class="product-dialog"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="detail-name"
+                 tabindex="-1">
+            <button class="close"
+                    type="button"
+                    data-close="product"
+                    aria-label="Close product details">
+                ×
+            </button>
+
+            <div class="detail-visual">
+                <div class="detail-art" id="detail-art"></div>
+                <p class="view-switch">FRONT VIEW</p>
+            </div>
+
+            <div class="detail-content">
+                <p class="eyebrow" id="detail-category"></p>
+                <h2 id="detail-name"></h2>
+                <p class="detail-color" id="detail-color"></p>
+
+                <p class="detail-description">
+                    An easy silhouette designed for everyday wear.
+                    A first-look concept with details to make your own.
+                </p>
+
+                <p class="size-label">
+                    SELECT SIZE
+                    <span>CONCEPT SIZING</span>
+                </p>
+
+                <div class="sizes"
+                     id="size-options"
+                     role="group"
+                     aria-label="Select a size"></div>
+
+                <button class="add-button"
+                        id="add-to-selection"
+                        type="button"
+                        disabled>
+                    Select a size
+                </button>
+
+                <p class="demo-note">
+                    Visual concept only. No prices, orders or payments
+                    are processed.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Selection drawer -->
+    <div class="overlay" id="cart-overlay" hidden>
+        <div class="scrim" data-close="cart"></div>
+
+        <section class="cart-dialog"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="cart-heading"
+                 tabindex="-1">
+            <div class="drawer-header">
+                <div>
+                    <p class="eyebrow">YOUR WARDROBE</p>
+                    <h2 id="cart-heading">Your selection.</h2>
+                </div>
+
+                <button class="close"
+                        type="button"
+                        data-close="cart"
+                        aria-label="Close selection">
+                    ×
+                </button>
+            </div>
+
+            <div id="cart-items" class="cart-items"></div>
+
+            <p class="drawer-note">
+                This is a visual preview. The selection is temporary
+                and no purchase will be made.
+            </p>
+
+            <button class="drawer-return"
+                    type="button"
+                    data-close="cart">
+                CONTINUE EXPLORING ↗
+            </button>
+        </section>
+    </div>
+
+    <p class="toast"
+       id="toast"
+       role="status"
+       aria-live="polite"></p>
+</body>
+</html>
