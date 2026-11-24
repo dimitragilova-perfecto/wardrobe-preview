@@ -332,88 +332,193 @@ document.addEventListener("keydown", event => {
 /* Wardrobe movement */
 
 const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
+  "(prefers-reduced-motion: reduce)"
 );
 
+const mobileScreen = window.matchMedia(
+  "(max-width: 700px)"
+);
+
+let scrollFrame = 0;
+
 function featureGarment(selected) {
-    const buttons = [...rail.querySelectorAll(".garment-button")];
-    const active = buttons.indexOf(selected);
+  const buttons = [
+    ...rail.querySelectorAll(".garment-button")
+  ];
 
-    buttons.forEach((button, index) => {
-        const featured = index === active;
-        const direction = index < active ? -1 : 1;
+  const active = buttons.indexOf(selected);
 
-        button.classList.toggle("is-featured", featured);
+  buttons.forEach((button, index) => {
+    const featured = index === active;
+    const direction = index < active ? -1 : 1;
 
-        button.style.setProperty(
-            "--turn",
-            featured ? "0deg" : "-68deg"
-        );
+    button.classList.toggle("is-featured", featured);
 
-        button.style.setProperty(
-            "--offset",
-            active < 0 || featured
-                ? "0px"
-                : `${direction * 55}px`
-        );
+    button.style.setProperty(
+      "--turn",
+      featured ? "0deg" : "-68deg"
+    );
 
-        button.style.setProperty(
-            "--scale",
-            featured ? "1.3" : "1"
-        );
+    button.style.setProperty(
+      "--offset",
+      active < 0 || featured
+        ? "0px"
+        : `${direction * 55}px`
+    );
 
-        button.style.setProperty(
-            "--swing",
-            featured ? "-1deg" : "0deg"
-        );
+    button.style.setProperty(
+      "--scale",
+      featured ? "1.3" : "1"
+    );
 
-        button.style.zIndex = featured ? "2" : "1";
-    });
+    button.style.setProperty(
+      "--swing",
+      featured ? "-1deg" : "0deg"
+    );
+
+    button.style.zIndex = featured ? "2" : "1";
+  });
 }
 
+function updateMobileSelection() {
+  if (!mobileScreen.matches) {
+    return;
+  }
+
+  const buttons = [
+    ...rail.querySelectorAll(".garment-button")
+  ];
+
+  if (!buttons.length) {
+    return;
+  }
+
+  const box = wrap.getBoundingClientRect();
+  const center = box.left + box.width / 2;
+
+  const nearest = buttons.reduce((closest, button) => {
+    const rect = button.getBoundingClientRect();
+
+    const distance = Math.abs(
+      center - (rect.left + rect.width / 2)
+    );
+
+    if (!closest || distance < closest.distance) {
+      return { button, distance };
+    }
+
+    return closest;
+  }, null);
+
+  const index = buttons.indexOf(nearest.button);
+
+  if (!reducedMotion.matches) {
+    featureGarment(nearest.button);
+  }
+
+  document.getElementById("product-count").textContent =
+    `${String(index + 1).padStart(2, "0")} / ` +
+    `${String(buttons.length).padStart(2, "0")}`;
+}
+
+/* Update the selected garment while swiping */
+
+wrap.addEventListener(
+  "scroll",
+  () => {
+    if (!mobileScreen.matches || scrollFrame) {
+      return;
+    }
+
+    scrollFrame = requestAnimationFrame(() => {
+      scrollFrame = 0;
+      updateMobileSelection();
+    });
+  },
+  { passive: true }
+);
+
+/* Reset the mobile position when a category changes */
+
+document.querySelectorAll("[data-filter]").forEach(button => {
+  button.addEventListener("click", () => {
+    if (mobileScreen.matches) {
+      wrap.scrollLeft = 0;
+      requestAnimationFrame(updateMobileSelection);
+    }
+  });
+});
+
+window.addEventListener("resize", () => {
+  if (mobileScreen.matches) {
+    updateMobileSelection();
+  } else {
+    featureGarment(null);
+  }
+});
+
+/* Desktop mouse movement */
+
 wrap.addEventListener("pointermove", event => {
-    if (event.pointerType === "touch" || reducedMotion.matches) {
-        return;
+  if (
+    event.pointerType === "touch" ||
+    mobileScreen.matches ||
+    reducedMotion.matches
+  ) {
+    return;
+  }
+
+  const buttons = [
+    ...rail.querySelectorAll(".garment-button")
+  ];
+
+  const nearest = buttons.reduce((closest, button) => {
+    const rect = button.getBoundingClientRect();
+
+    const distance = Math.abs(
+      event.clientX - (rect.left + rect.width / 2)
+    );
+
+    if (!closest || distance < closest.distance) {
+      return { button, distance };
     }
 
-    const buttons = [...rail.querySelectorAll(".garment-button")];
+    return closest;
+  }, null);
 
-    const nearest = buttons.reduce((closest, button) => {
-        const rect = button.getBoundingClientRect();
-
-        const distance = Math.abs(
-            event.clientX - (rect.left + rect.width / 2)
-        );
-
-        if (!closest || distance < closest.distance) {
-            return { button, distance };
-        }
-
-        return closest;
-    }, null);
-
-    if (nearest) {
-        featureGarment(nearest.button);
-    }
+  if (nearest) {
+    featureGarment(nearest.button);
+  }
 });
 
 wrap.addEventListener("pointerleave", () => {
+  if (!mobileScreen.matches) {
     featureGarment(null);
+  }
 });
 
-rail.addEventListener("focusin", event => {
-    const button = event.target.closest(".garment-button");
+/* Keyboard interaction */
 
-    if (button && !reducedMotion.matches) {
-        featureGarment(button);
-    }
+rail.addEventListener("focusin", event => {
+  const button = event.target.closest(".garment-button");
+
+  if (button && !reducedMotion.matches) {
+    featureGarment(button);
+  }
 });
 
 rail.addEventListener("focusout", event => {
-    if (!rail.contains(event.relatedTarget)) {
-        featureGarment(null);
-    }
+  if (
+    !mobileScreen.matches &&
+    !rail.contains(event.relatedTarget)
+  ) {
+    featureGarment(null);
+  }
 });
 
 renderRail();
 renderCart();
+
+if (mobileScreen.matches) {
+  requestAnimationFrame(updateMobileSelection);
+}
