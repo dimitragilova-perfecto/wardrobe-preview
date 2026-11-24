@@ -1083,7 +1083,7 @@ body.dialog-open {
         font-size: 8px;
     }
 }
-/* Mobile wardrobe slider */
+/* Swipeable mobile wardrobe */
 
 @media (max-width: 700px) {
   .wardrobe-wrap {
@@ -1124,7 +1124,7 @@ body.dialog-open {
   }
 }
 
-/* Respect the visitor's reduced-motion preference */
+/* Keep motion reduced for visitors who request it */
 
 @media (max-width: 700px) and
        (prefers-reduced-motion: reduce) {
