@@ -168,61 +168,112 @@
         <a href="#story">OUR STORY ↑</a>
     </footer>
 
-    <!-- Product details -->
-    <div class="overlay" id="product-overlay" hidden>
-        <div class="scrim" data-close="product"></div>
+  <!-- Product details -->
+<div class="overlay" id="product-overlay" hidden>
+  <div class="scrim" data-close="product"></div>
 
-        <section class="product-dialog"
-                 role="dialog"
-                 aria-modal="true"
-                 aria-labelledby="detail-name"
-                 tabindex="-1">
-            <button class="close"
-                    type="button"
-                    data-close="product"
-                    aria-label="Close product details">
-                ×
-            </button>
+  <section
+    class="product-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="detail-name"
+    tabindex="-1"
+  >
+    <button
+      class="close"
+      type="button"
+      data-close="product"
+      aria-label="Close product details"
+    >
+      ×
+    </button>
 
-            <div class="detail-visual">
-                <div class="detail-art" id="detail-art"></div>
-                <p class="view-switch">FRONT VIEW</p>
-            </div>
-
-            <div class="detail-content">
-                <p class="eyebrow" id="detail-category"></p>
-                <h2 id="detail-name"></h2>
-                <p class="detail-color" id="detail-color"></p>
-
-                <p class="detail-description">
-                    An easy silhouette designed for everyday wear.
-                    A first-look concept with details to make your own.
-                </p>
-
-                <p class="size-label">
-                    SELECT SIZE
-                    <span>CONCEPT SIZING</span>
-                </p>
-
-                <div class="sizes"
-                     id="size-options"
-                     role="group"
-                     aria-label="Select a size"></div>
-
-                <button class="add-button"
-                        id="add-to-selection"
-                        type="button"
-                        disabled>
-                    Select a size
-                </button>
-
-                <p class="demo-note">
-                    Visual concept only. No prices, orders or payments
-                    are processed.
-                </p>
-            </div>
-        </section>
+    <div class="detail-visual">
+      <div class="detail-art" id="detail-art"></div>
     </div>
+
+    <div class="detail-content">
+      <p class="eyebrow" id="detail-category"></p>
+
+      <h2 id="detail-name"></h2>
+
+      <p class="detail-color" id="detail-color"></p>
+
+      <div class="product-options">
+        <div class="photo-switch" aria-label="Product photos">
+          <span class="photo-current">Отпред</span>
+
+          <button type="button" disabled>
+            Отзад
+          </button>
+        </div>
+
+        <div class="color-preview">
+          <span class="color-dot"></span>
+          <span>Black</span>
+        </div>
+      </div>
+
+      <p class="photo-note">
+        Снимка отзад и други цветове ще бъдат добавени по-късно.
+      </p>
+
+      <div class="size-heading">
+        <span>ИЗБЕРИ РАЗМЕР</span>
+      </div>
+
+      <div
+        class="sizes"
+        id="size-options"
+        role="group"
+        aria-label="Select a size"
+      ></div>
+
+      <details class="fit-guide">
+        <summary>Кройка ↗</summary>
+
+        <div class="fit-guide-content">
+          <p class="fit-eyebrow">THE FIT GUIDE</p>
+
+          <h3>Свободата е в кройката.</h3>
+
+          <p>
+            Тук ще добавим информация за кройката и точните
+            размери на продукта.
+          </p>
+
+          <p class="fit-note">
+            Размерите и снимките са примерни за визуализация.
+            Точните мерки ще бъдат добавени след потвърждение.
+          </p>
+        </div>
+      </details>
+
+      <button
+        class="add-button"
+        id="add-to-selection"
+        type="button"
+        disabled
+      >
+        Select a size
+      </button>
+
+      <details class="product-info">
+        <summary>За модела и изработката +</summary>
+
+        <p>
+          Информацията за материята и изработката ще бъде
+          добавена след потвърждение.
+        </p>
+      </details>
+
+      <p class="demo-note">
+        Visual concept only. No prices, orders or payments
+        are processed.
+      </p>
+    </div>
+  </section>
+</div>
 
     <!-- Selection drawer -->
     <div class="overlay" id="cart-overlay" hidden>
